@@ -12,10 +12,10 @@ class Currency_service:
         self._Session = sessionmaker(bind=self._engine)
 
     def get_all(self):
-        pass
+        return self._Session.query(self._Currency_rate_model)
 
     def get_last(self):
-        pass
+        return self._Session.query(self._Currency_rate_model).last()
 
     def get_timer_interval(self):
         pass
