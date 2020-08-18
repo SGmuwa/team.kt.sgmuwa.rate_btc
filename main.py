@@ -4,7 +4,7 @@ from flask import Flask, jsonify
 from currency_service import Currency_service
 
 app = Flask(__name__)
-currency_service = Currency_service()
+currency_service = Currency_service('sqlite:///:memory:', input('auth:'))
 
 
 @app.route('/btc/api/v1.0/currencies', methods=['GET'])
