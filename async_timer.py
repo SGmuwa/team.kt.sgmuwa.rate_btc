@@ -9,6 +9,15 @@ class AsyncTimer:
     async def _job(self):
         await asyncio.sleep(self._timeout)
         await self._callback()
+        await self._job()
 
     def cancel(self):
         self._task.cancel()
+
+    @interval.setter
+    def interval(self, seconds):
+        self._timeout = seconds
+
+    @interval.getter
+    def interval(self):
+        return self._timeout
