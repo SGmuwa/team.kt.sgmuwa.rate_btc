@@ -12,7 +12,7 @@ class Currency_service:
         self._session = sessionmaker(bind=self._engine)()
 
     def get_all(self):
-        return self._session.query(self._Currency_rate_model)
+        return self._session.query(self._Currency_rate_model).all()
 
     def get_last(self):
         return self._session.query(self._Currency_rate_model).last()
