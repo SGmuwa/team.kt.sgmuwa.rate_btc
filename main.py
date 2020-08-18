@@ -13,12 +13,12 @@ async def get_currency_last():
     return jsonify( { 'currency': await currency_service.get_last() } )
 
 @app.route('/btc/api/v1.0/timer/<int:seconds>', methods = ['UPDATE'])
-async def get_currency_last(seconds: int):
+async def set_timer_interval(seconds: int):
     currency_service.set_timer_interval(seconds)
     return jsonify( { 'interval': currency_service.get_timer_interval() } )
 
 @app.route('/btc/api/v1.0/timer/now', methods = ['UPDATE'])
-async def get_currency_last(seconds: int):
+async def update_now(seconds: int):
     return jsonify( { 'currency': await currency_service.update_now(seconds) } )
 
 if __name__ == '__main__':
