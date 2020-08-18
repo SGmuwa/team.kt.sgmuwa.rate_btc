@@ -19,8 +19,8 @@ def set_timer_interval(seconds: int):
     return jsonify( { 'interval': currency_service.interval } )
 
 @app.route('/btc/api/v1.0/timer/now', methods = ['UPDATE'])
-def update_now(seconds: int):
-    return jsonify( { 'currency': currency_service.update_now(seconds) } )
+def update_now():
+    return jsonify( { 'currency': currency_service.update_now() } )
 
 if __name__ == '__main__':
     app.run(debug = True)
