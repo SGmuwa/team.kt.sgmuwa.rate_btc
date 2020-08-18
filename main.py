@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from quart import Quart, jsonify
+from currency_service import Currency_service
 
 app = Flask(__name__)
 currency_service = Currency_service()
