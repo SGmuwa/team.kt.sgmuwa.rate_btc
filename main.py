@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 from flask import Flask, jsonify
 from currency_service import Currency_service
 
@@ -23,4 +24,4 @@ def update_now():
     return jsonify( { 'currency': currency_service.update_now() } )
 
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run(debug = False)
