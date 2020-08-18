@@ -10,5 +10,12 @@ def make_model(Base):
         stamp =     Column(DateTime, default=datetime.utcnow)
         currency =  Column(String)
         price =     Column(Float(asdecimal=True))
+
+        def __repr__(self):
+            return f"<{type(self)}(\
+                id={self.id}, \
+                stamp={self.stamp}, \
+                currency={self.currency}, \
+                price={self.price})>"
     
     return type(CurrencyRateModel())
