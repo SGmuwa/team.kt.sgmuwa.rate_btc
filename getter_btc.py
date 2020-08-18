@@ -1,19 +1,23 @@
 #!/usr/bin/env python
-import requests
+import aiohttp
+import asyncio
 
-def get_btc(authkey: str):
+async def get_btc(authkey: str):
     """
     Gets the current bitcoin rate from server.
     :param authkey: Authkey from pro-api.coinmarketcap.com.
     """
     try:
-        j = requests.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest',
-            headers = {'X-CMC_PRO_API_KEY': authkey, 'Accept': 'application/json'},
-            params = {'id': 1}).json()['data']['1']
-        currency = list(j['quote'].keys())[0]
-        return {'currency': currency, 'price': j['quote'][currency]['price']}
+        async with aiohttp.ClientSession() as session:
+            response = await session.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest', headers = {'X-CMC_PRO_API_KEY': authkey, 'Accept': 'application/json'}, params = {'id': 1})
+            j = (await response.json())['data']['1']
+            currency = list(j['quote'].keys())[0]
+            return {'currency': currency, 'price': j['quote'][currency]['price']}
     except:
         return None
 
+async def main():
+    print(await get_btc(input("authkey: ")))
+
 if __name__ == "__main__":
-    print(get_btc(input("authkey: ")))
+    asyncio.run(main())
