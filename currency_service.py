@@ -9,13 +9,13 @@ class Currency_service:
         self._Base = declarative_base()
         self._Currency_rate_model = currency_rate_model.make_model(self._Base)
         self._Base.metadata.create_all(self._engine)
-        self._Session = sessionmaker(bind=self._engine)
+        self._session = sessionmaker(bind=self._engine)()
 
     def get_all(self):
-        return self._Session.query(self._Currency_rate_model)
+        return self._session.query(self._Currency_rate_model)
 
     def get_last(self):
-        return self._Session.query(self._Currency_rate_model).last()
+        return self._session.query(self._Currency_rate_model).last()
 
     def get_timer_interval(self):
         pass
