@@ -6,17 +6,24 @@ services:
     env_file:
       - default_compose.env
     environment:
-      - RATE_BTC_DB=mysql://root:protectedByDocker0@mysql_runner/btc
+      - RATE_BTC_DB=mysql://root:k9130ru30f2j@mysql_runner/btc
       - RATE_BTC_AUTH=$${RATE_BTC_AUTH}
       - RATE_BTC_INTERVAL_UPDATE=$${RATE_BTC_INTERVAL_UPDATE}
       - RATE_BTC_PORT=80
+    depends_on:
+      - mysql_runner
 
   mysql_runner:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=protectedByDocker0
+      MYSQL_ROOT_PASSWORD: "k9130ru30f2j"
+      MYSQL_DATABASE: "btc"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
 
   gateway:
     image: nginx:latest
