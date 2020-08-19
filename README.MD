@@ -7,6 +7,7 @@ Go to https://pro.coinmarketcap.com/account/ and get your token.
 ```bash
 sudo RATE_BTC_AUTH=YOUR-TOKEN-HERE docker-compose up
 ```
+If you see ```btc_runner_1    |  * Running on http://0.0.0.0:80/ (Press CTRL+C to quit)``` and ```gateway_1       | /docker-entrypoint.sh: Configuration complete; ready for start up```, you can connect to server http://localhost/
 You can also append RATE_BTC_INTERVAL_UPDATE:
 ```bash
 sudo RATE_BTC_AUTH=YOUR-TOKEN-HERE RATE_BTC_INTERVAL_UPDATE=600 docker-compose up
