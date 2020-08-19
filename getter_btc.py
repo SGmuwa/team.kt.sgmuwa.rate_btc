@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import requests
+import sys
 
 def get_btc(authkey: str):
     """
@@ -12,7 +13,8 @@ def get_btc(authkey: str):
             params = {'id': 1}).json()['data']['1']
         currency = list(j['quote'].keys())[0]
         return {'currency': currency, 'price': j['quote'][currency]['price']}
-    except:
+    except Exception as e:
+        print(e, type(e), file=sys.stderr)
         return None
 
 if __name__ == "__main__":

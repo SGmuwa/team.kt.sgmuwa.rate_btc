@@ -6,22 +6,35 @@ from timer import MultiTimer
 from getter_btc import get_btc
 from sqlalchemy.pool import StaticPool
 import sys
+from time import sleep
 
 class Currency_service:
     def __init__(self, db_info: str, authkey: str, interval: float):
         self._authkey = authkey
         if db_info == 'sqlite:///:memory:':
             raise Exception('«sqlite:///:memory:» dose not support.')
-        for _ in range(10):
+        for i in range(10):
             try:
                 self._engine = create_engine(db_info)
             except Exception as e:
-                print(e, file=sys.stderr)
+                print(e, type(e), file=sys.stderr)
+                sleep(2)
+                if i == 9:
+                    raise
             else:
                 break
         self._Base = declarative_base()
         self._Currency_rate_model = currency_rate_model.make_model(self._Base)
-        self._Base.metadata.create_all(self._engine)
+        for i in range(10):
+            try:
+                self._Base.metadata.create_all(self._engine)
+            except Exception as e:
+                print(e, type(e), file=sys.stderr)
+                sleep(2)
+                if i == 9:
+                    raise
+            else:
+                break
         self._sessionmaker = sessionmaker(bind=self._engine)
         self._session = self._sessionmaker()
         self._timer = MultiTimer(interval, self.update_now)
