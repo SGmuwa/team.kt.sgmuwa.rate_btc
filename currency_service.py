@@ -27,7 +27,7 @@ class Currency_service:
         return self._session.query(self._Currency_rate_model).all()
 
     def get_last(self):
-        return self._session.query(self._Currency_rate_model).last()
+        return self._session.query(self._Currency_rate_model).order_by(self._Currency_rate_model.id.desc()).first()
 
     interval = property()
 
