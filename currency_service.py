@@ -18,7 +18,7 @@ class Currency_service:
                 self._engine = create_engine(db_info)
             except Exception as e:
                 print(e, type(e), file=sys.stderr)
-                sleep(2)
+                sleep(10)
                 if i == 9:
                     raise
             else:
@@ -30,7 +30,7 @@ class Currency_service:
                 self._Base.metadata.create_all(self._engine)
             except Exception as e:
                 print(e, type(e), file=sys.stderr)
-                sleep(2)
+                sleep(10)
                 if i == 9:
                     raise
             else:
