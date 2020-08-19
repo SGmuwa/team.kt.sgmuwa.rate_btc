@@ -1,16 +1,17 @@
-from multiprocessing import Process, Event
+from os import fork
 from time import sleep
 
 
-class MultiTimer(Process):
+class MultiTimer:
     def __init__(self, interval, function, args=[], kwargs={}):
         super(MultiTimer, self).__init__()
         self.interval = interval
         self.function = function
         self.args = args
         self.kwargs = kwargs
-        self.p = Process(target=self._tick, args=())
-        self.p.start()
+        pid = fork()
+        if pid == 0:
+            self._tick()
 
     def cancel(self):
         """Stop the timer if it hasn't finished yet"""
