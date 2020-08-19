@@ -34,12 +34,12 @@ Get help:
 | RATE_BTC_PORT            | Port (listener) of flask server. Default 5000.      |
 
 # API
-| method | urn                                  | help                                                                           |
-|--------|--------------------------------------|--------------------------------------------------------------------------------|
-| GET    | /                                    | Get available urns                                                             |
-| GET    | /btc/api/v1.0/                       | Get available urns                                                             |
-| GET    | /btc/api/v1.0/currencies/            | Get all rates bitcoin                                                          |
-| GET    | /btc/api/v1.0/currencies/last/       | Get last rate bitcoin                                                          |
-| PUT    | /btc/api/v1.0/timer/<float:seconds>/ | Change timer interval                                                          |
-| PATCH  | /btc/api/v1.0/timer/now/             | Get Bitcoin rate and put result in DB, return actual rate without id and stamp |
+| method | urn                                      | help                                                                           |
+|--------|------------------------------------------|--------------------------------------------------------------------------------|
+| GET    | /                                        | Get available urns                                                             |
+| GET    | /btc/api/v1.0/                           | Get available urns                                                             |
+| GET    | /btc/api/v1.0/currencies/                | Get all rates bitcoin                                                          |
+| GET    | /btc/api/v1.0/currencies/last/           | Get last rate bitcoin                                                          |
+| PUT    | /btc/api/v1.0/timer/```float:seconds```/ | Set timer interval (replace ```float:seconds``` to 456.7 for example)          |
+| PATCH  | /btc/api/v1.0/timer/now/                 | Get Bitcoin rate and put result in DB, return actual rate without id and stamp |
 
