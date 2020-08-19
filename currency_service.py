@@ -10,7 +10,7 @@ class Currency_service:
     def __init__(self, db_info: str, authkey: str, interval: float):
         self._authkey = authkey
         if db_info == 'sqlite:///:memory:':
-            raise Exception('«sqlite:///:memory:» not support.')
+            raise Exception('«sqlite:///:memory:» dose not support.')
         else:
             self._engine = create_engine(db_info)
         self._Base = declarative_base()
