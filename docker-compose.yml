@@ -12,6 +12,10 @@ services:
       - RATE_BTC_PORT=80
     depends_on:
       - mysql_runner
+    healthcheck:
+      test: ["CMD", "curl", "localhost/"]
+      timeout: 20s
+      retries: 10
 
   mysql_runner:
     image: mysql
@@ -21,7 +25,7 @@ services:
       MYSQL_ROOT_PASSWORD: "k9130ru30f2j"
       MYSQL_DATABASE: "btc"
     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 20s
       retries: 10
 
@@ -31,3 +35,5 @@ services:
       - 80:80
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - btc_runner
