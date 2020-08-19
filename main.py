@@ -42,23 +42,23 @@ if __name__ == '__main__':
 set_custom_json_encoder(app)
 
 
-@app.route('/btc/api/v1.0/currencies', methods=['GET'])
+@app.route('/btc/api/v1.0/currencies/', methods=['GET'])
 def get_currencies():
     return jsonify({'currencies': currency_service.get_all()})
 
 
-@app.route('/btc/api/v1.0/currencies/last', methods=['GET'])
+@app.route('/btc/api/v1.0/currencies/last/', methods=['GET'])
 def get_currency_last():
     return jsonify({'currency': currency_service.get_last()})
 
 
-@app.route('/btc/api/v1.0/timer/<float:seconds>', methods=['PUT'])
+@app.route('/btc/api/v1.0/timer/<float:seconds>/', methods=['PUT'])
 def set_timer_interval(seconds: float):
     currency_service.interval = seconds
     return jsonify({'interval': currency_service.interval})
 
 
-@app.route('/btc/api/v1.0/timer/now', methods=['PATCH'])
+@app.route('/btc/api/v1.0/timer/now/', methods=['PATCH'])
 def update_now():
     return jsonify({'currency': currency_service.update_now()})
 
@@ -66,10 +66,10 @@ def update_now():
 @app.route('/btc/api/v1.0/', methods=['GET'])
 def get_api():
     return jsonify({'api': [
-        {'url': '/btc/api/v1.0/currencies', 'method': 'GET'},
-        {'url': '/btc/api/v1.0/currencies/last', 'method': 'GET'},
-        {'url': '/btc/api/v1.0/timer/<float:seconds>', 'method': 'PUT'},
-        {'url': '/btc/api/v1.0/timer/now', 'method': 'PATCH'},
+        {'url': '/btc/api/v1.0/currencies/', 'method': 'GET'},
+        {'url': '/btc/api/v1.0/currencies/last/', 'method': 'GET'},
+        {'url': '/btc/api/v1.0/timer/<float:seconds>/', 'method': 'PUT'},
+        {'url': '/btc/api/v1.0/timer/now/', 'method': 'PATCH'},
         {'url': '/btc/api/v1.0/', 'method': 'GET'}]})
 
 
