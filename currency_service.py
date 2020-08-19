@@ -4,11 +4,18 @@ from sqlalchemy.ext.declarative import declarative_base
 import currency_rate_model
 from timer import MultiTimer
 from getter_btc import get_btc
+from sqlalchemy.pool import StaticPool
 
 class Currency_service:
     def __init__(self, db_info: str, authkey: str):
         self._authkey = authkey
-        self._engine = create_engine(db_info, echo=True)
+        if db_info == 'sqlite:///:memory:':
+            self._engine = create_engine(
+                db_info,
+                connect_args={"check_same_thread": False},
+                poolclass=StaticPool)
+        else:
+            self._engine = create_engine(db_info)
         self._Base = declarative_base()
         self._Currency_rate_model = currency_rate_model.make_model(self._Base)
         self._Base.metadata.create_all(self._engine)
