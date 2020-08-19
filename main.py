@@ -1,5 +1,19 @@
 #!/usr/bin/env python
 
+import sys
+if __name__ == '__main__' and ('-h' in sys.argv or '--help' in sys.argv):
+    print('''
+This service get currency BTC from other API and save it in DB.
+
+envs:
+RATE_BTC_DB	str info about DB. Default: sqlite:///:memory:
+RATE_BTC_AUTH	Authkey from another API
+RATE_BTC_INTERVAL_UPDATE	Interval to autosave from API to DB. Default: 300.0
+
+args:
+-h	get this help
+'''); quit()
+
 from flask import Flask, jsonify
 from currency_service import Currency_service
 import os
@@ -8,6 +22,10 @@ db_info: str = os.getenv('RATE_BTC_DB', 'sqlite:///:memory:')
 authkey: str = os.environ.get('RATE_BTC_AUTH')
 if authkey is None:
     authkey = input('authkey: ')
+try:
+    interval: float = float(os.environ['RATE_BTC_INTERVAL_UPDATE'])
+except:
+    interval: float = 60.*5
 
 app = Flask(__name__)
 currency_service = Currency_service(db_info, authkey)
