@@ -1,4 +1,5 @@
 from multiprocessing import Process, Event
+from time import sleep
 
 
 class MultiTimer(Process):
@@ -8,19 +9,15 @@ class MultiTimer(Process):
         self.function = function
         self.args = args
         self.kwargs = kwargs
-        self.is_cancel = False
-        self.finished = Event()
+        self.p = Process(target=self._tick, args=())
+        self.p.start()
 
     def cancel(self):
         """Stop the timer if it hasn't finished yet"""
         self.is_cancel = True
-        self.finished.set()
 
-    def run(self):
+    def _tick(self):
         self.is_cancel = False
         while not self.is_cancel:
-            self.finished = Event()
-            self.finished.wait(self.interval)
-            if not self.finished.is_set():
-                self.function(*self.args, **self.kwargs)
-            self.finished.set()
+            self.function(*self.args, **self.kwargs)
+            sleep(self.interval)

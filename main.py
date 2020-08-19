@@ -29,8 +29,9 @@ try:
 except:
     interval: float = 60.*5
 
-app = Flask(__name__)
-currency_service = Currency_service(db_info, authkey, interval)
+if __name__ == '__main__':
+    app = Flask(__name__)
+    currency_service = Currency_service(db_info, authkey, interval)
 
 set_custom_json_encoder(app)
 

@@ -21,8 +21,6 @@ class Currency_service:
         self._Base.metadata.create_all(self._engine)
         self._session = sessionmaker(bind=self._engine)()
         self._timer = MultiTimer(interval, self.update_now)
-        self.update_now()
-        self._timer.run()
 
     def get_all(self):
         return [c.as_dict() for c in \
