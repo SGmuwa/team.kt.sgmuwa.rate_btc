@@ -9,6 +9,7 @@ envs:
 RATE_BTC_DB	str info about DB. Default: sqlite:////tmp/btc.db
 RATE_BTC_AUTH	Authkey from another API
 RATE_BTC_INTERVAL_UPDATE	Interval to autosave from API to DB. Default: 300.0
+RATE_BTC_PORT	Port (listener) of flask server. Default 5000.
 
 args:
 -h	get this help
@@ -28,6 +29,11 @@ try:
     interval: float = float(os.environ['RATE_BTC_INTERVAL_UPDATE'])
 except:
     interval: float = 60.*5
+try:
+    port: int = int(os.environ['RATE_BTC_PORT'])
+except:
+    port: int = 5000
+
 
 if __name__ == '__main__':
     app = Flask(__name__)
@@ -58,4 +64,4 @@ def update_now():
 
 
 if __name__ == '__main__':
-    app.run(debug=False, port=80, host='0.0.0.0')
+    app.run(debug=False, port=port, host='0.0.0.0')
