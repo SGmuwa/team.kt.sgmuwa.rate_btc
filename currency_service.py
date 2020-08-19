@@ -7,7 +7,7 @@ from getter_btc import get_btc
 from sqlalchemy.pool import StaticPool
 
 class Currency_service:
-    def __init__(self, db_info: str, authkey: str):
+    def __init__(self, db_info: str, authkey: str, interval: float):
         self._authkey = authkey
         if db_info == 'sqlite:///:memory:':
             self._engine = create_engine(
@@ -20,8 +20,9 @@ class Currency_service:
         self._Currency_rate_model = currency_rate_model.make_model(self._Base)
         self._Base.metadata.create_all(self._engine)
         self._session = sessionmaker(bind=self._engine)()
-        self._timer = MultiTimer(20, self.update_now)
+        self._timer = MultiTimer(interval, self.update_now)
         self.update_now()
+        self._timer.run()
 
     def get_all(self):
         return [c.as_dict() for c in \
