@@ -10,16 +10,14 @@ class Currency_service:
     def __init__(self, db_info: str, authkey: str, interval: float):
         self._authkey = authkey
         if db_info == 'sqlite:///:memory:':
-            self._engine = create_engine(
-                db_info,
-                connect_args={"check_same_thread": False},
-                poolclass=StaticPool)
+            raise Exception('«sqlite:///:memory:» not support.')
         else:
             self._engine = create_engine(db_info)
         self._Base = declarative_base()
         self._Currency_rate_model = currency_rate_model.make_model(self._Base)
         self._Base.metadata.create_all(self._engine)
-        self._session = sessionmaker(bind=self._engine)()
+        self._sessionmaker = sessionmaker(bind=self._engine)
+        self._session = self._sessionmaker()
         self._timer = MultiTimer(interval, self.update_now)
 
     def get_all(self):
@@ -49,4 +47,5 @@ class Currency_service:
         c = get_btc(self._authkey)
         if c is not None:
             self._session.add(self._Currency_rate_model(currency = c['currency'], price = c['price']))
+            self._session.commit()
         return c
