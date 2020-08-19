@@ -27,11 +27,13 @@ class Currency_service:
             .all()]
 
     def get_last(self):
-        return self._session \
+        last = self._session \
             .query(self._Currency_rate_model) \
             .order_by(self._Currency_rate_model.id.desc()) \
-            .first() \
-            .as_dict()
+            .first()
+        if last is not None:
+            return last.as_dict()
+        return None
 
     interval = property()
 
