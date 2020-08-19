@@ -10,7 +10,7 @@ def make_model(Base):
 
         id =        Column(Integer, primary_key=True)
         stamp =     Column(DateTime, default=datetime.utcnow)
-        currency =  Column(String)
+        currency =  Column(String(20))
         price =     Column(Float(asdecimal=True))
 
         def __repr__(self):
