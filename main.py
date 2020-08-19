@@ -46,7 +46,7 @@ def get_currency_last():
     return jsonify({'currency': currency_service.get_last()})
 
 
-@app.route('/btc/api/v1.0/timer/<float:seconds>', methods=['UPDATE'])
+@app.route('/btc/api/v1.0/timer/<float:seconds>', methods=['PUT'])
 def set_timer_interval(seconds: float):
     currency_service.interval = seconds
     return jsonify({'interval': currency_service.interval})
