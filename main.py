@@ -62,6 +62,15 @@ def set_timer_interval(seconds: float):
 def update_now():
     return jsonify({'currency': currency_service.update_now()})
 
+@app.route('/', methods=['GET'])
+def get_api():
+    return jsonify({'api': [
+        {'url': '/btc/api/v1.0/currencies', 'method': 'GET'},
+        {'url': '/btc/api/v1.0/currencies/last', 'method': 'GET'},
+        {'url': '/btc/api/v1.0/timer/<float:seconds>', 'method': 'PUT'},
+        {'url': '/btc/api/v1.0/timer/now', 'method': 'PATCH'},
+        {'url': '/', 'method': 'GET'}]})
+
 
 if __name__ == '__main__':
     app.run(debug=False, port=port, host='0.0.0.0')
