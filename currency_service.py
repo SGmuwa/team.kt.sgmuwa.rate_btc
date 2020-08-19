@@ -24,15 +24,17 @@ class Currency_service:
         self.update_now()
 
     def get_all(self):
-        return self._session \
+        return [c.as_dict() for c in \
+            self._session \
             .query(self._Currency_rate_model) \
-            .all()
+            .all()]
 
     def get_last(self):
         return self._session \
             .query(self._Currency_rate_model) \
             .order_by(self._Currency_rate_model.id.desc()) \
-            .first()
+            .first() \
+            .as_dict()
 
     interval = property()
 

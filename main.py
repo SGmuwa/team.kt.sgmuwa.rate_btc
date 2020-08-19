@@ -17,6 +17,8 @@ args:
 from flask import Flask, jsonify
 from currency_service import Currency_service
 import os
+from custom_json_encoder import set_custom_json_encoder
+
 
 db_info: str = os.getenv('RATE_BTC_DB', 'sqlite:///:memory:')
 authkey: str = os.environ.get('RATE_BTC_AUTH')
@@ -29,6 +31,8 @@ except:
 
 app = Flask(__name__)
 currency_service = Currency_service(db_info, authkey)
+
+set_custom_json_encoder(app)
 
 
 @app.route('/btc/api/v1.0/currencies', methods=['GET'])

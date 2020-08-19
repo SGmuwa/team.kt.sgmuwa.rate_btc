@@ -19,5 +19,9 @@ def make_model(Base):
                 stamp={self.stamp}, \
                 currency={self.currency}, \
                 price={self.price})>"
+
+        def as_dict(self):
+            return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
     
     return type(CurrencyRateModel())
