@@ -1,5 +1,6 @@
 from flask.json import JSONEncoder
 import datetime
+from decimal import Decimal
 
 
 class CustomJSONEncoder(JSONEncoder):
@@ -9,6 +10,8 @@ class CustomJSONEncoder(JSONEncoder):
       return str(o)
     elif type(o) == datetime.datetime:
       return o.isoformat()
+    elif type(o) == Decimal:
+      return str(o)
     else:
       return super().default(o)
 
