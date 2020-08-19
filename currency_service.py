@@ -13,7 +13,7 @@ class Currency_service:
         self._Currency_rate_model = currency_rate_model.make_model(self._Base)
         self._Base.metadata.create_all(self._engine)
         self._session = sessionmaker(bind=self._engine)()
-        self._timer = MultiTimer(60*10, self.update_now)
+        self._timer = MultiTimer(20, self.update_now)
         self.update_now()
 
     def get_all(self):

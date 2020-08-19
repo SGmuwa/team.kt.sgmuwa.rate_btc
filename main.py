@@ -2,9 +2,15 @@
 
 from flask import Flask, jsonify
 from currency_service import Currency_service
+import os
+
+db_info: str = os.getenv('RATE_BTC_DB', 'sqlite:///:memory:')
+authkey: str = os.environ.get('RATE_BTC_AUTH')
+if authkey is None:
+    authkey = input('authkey: ')
 
 app = Flask(__name__)
-currency_service = Currency_service('sqlite:///:memory:', input('auth:'))
+currency_service = Currency_service(db_info, authkey)
 
 
 @app.route('/btc/api/v1.0/currencies', methods=['GET'])
