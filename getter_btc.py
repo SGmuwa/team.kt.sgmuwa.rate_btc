@@ -12,7 +12,7 @@ def get_btc(authkey: str):
         j = requests.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest',
             headers = {'X-CMC_PRO_API_KEY': authkey, 'Accept': 'application/json'},
             params = {'id': 1})
-        j = j.json()['data']['1']
+        j = j.json(use_decimal=True)['data']['1']
         currency = list(j['quote'].keys())[0]
         return {'currency': currency, 'price': j['quote'][currency]['price']}
     except Exception as e:
